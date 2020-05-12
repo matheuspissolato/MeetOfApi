@@ -42,7 +42,7 @@ public class RestaurantController {
 	@GetMapping("/restaurants")
 	public ResponseEntity<List<RestaurantDto>> findAll() {
 		log.info("Starting get all restaurants");
-		List<RestaurantDto> restaurantDto = mapper.toListRestaurantDto(restaurantService.findAll());
+		List<RestaurantDto> restaurantDto = this.mapper.toListRestaurantDto(restaurantService.findAll());
 
 		if (restaurantDto.isEmpty())
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);

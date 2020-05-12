@@ -44,7 +44,7 @@ public class OrderController {
 		Optional<Order> order = this.orderService.findById(id);
 
 		if (order.isPresent())
-			return new ResponseEntity<>(mapper.toOrderDto(order.get()), HttpStatus.OK);
+			return new ResponseEntity<>(this.mapper.toOrderDto(order.get()), HttpStatus.OK);
 		else
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
@@ -60,8 +60,8 @@ public class OrderController {
 			return ResponseEntity.badRequest().body(response);
 		}
 
-		Order order = this.orderService.persist(mapper.toOrder(orderDto));
-		response.setData(mapper.toOrderDto(order));
+		Order order = this.orderService.persist(this.mapper.toOrder(orderDto));
+		response.setData(this.mapper.toOrderDto(order));
 		return ResponseEntity.ok(response);
 	}
 }
