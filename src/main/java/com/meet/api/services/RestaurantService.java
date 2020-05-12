@@ -27,7 +27,7 @@ public interface RestaurantService {
 	Optional<Restaurant> findById(Long id);
 
 	/**
-	 * Persist new Restaurant
+	 * Persist Restaurant
 	 * 
 	 * @param restaurant
 	 * @return

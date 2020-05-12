@@ -39,7 +39,7 @@ public class RestaurantController {
 	@Autowired
 	private RestaurantMapper mapper;
 
-	@GetMapping("/restaurants")
+	@GetMapping("/restaurant")
 	public ResponseEntity<List<RestaurantDto>> findAll() {
 		log.info("Starting get all restaurants");
 		List<RestaurantDto> restaurantDto = this.mapper.toListRestaurantDto(restaurantService.findAll());
@@ -64,7 +64,7 @@ public class RestaurantController {
 	@PostMapping("/restaurant")
 	public ResponseEntity<Response<RestaurantDto>> create(@Valid @RequestBody RestaurantDto restaurantDto,
 			BindingResult result) {
-		log.info("Starting persist Restaurant...");
+		log.info("Starting create Restaurant...");
 		Response<RestaurantDto> response = new Response<>();
 
 		if (result.hasErrors()) {

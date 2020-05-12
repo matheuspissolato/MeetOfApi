@@ -17,4 +17,12 @@ public interface ReviewService {
 	 */
 	List<Review> findReviewsByRestaurantId(Long restaurantId);
 
+	/**
+	 * Persist Review
+	 * 
+	 * @param review
+	 * @return
+	 */
+	Review persist(Review review);
+
 }

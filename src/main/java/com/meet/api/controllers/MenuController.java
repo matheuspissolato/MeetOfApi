@@ -29,7 +29,7 @@ public class MenuController {
 	@Autowired
 	private MenuMapper mapper;
 
-	@GetMapping(value = "/restaurants/{restaurantId}/menu")
+	@GetMapping(value = "/restaurant/{restaurantId}/menu")
 	public ResponseEntity<List<MenuDto>> findMenuByRestaurant(@PathVariable("restaurantId") Long restaurantId) {
 		log.info("Starting get menu items by restaurantId");
 		List<MenuDto> menu = this.mapper.toListMenuDto(this.menuService.findMenuByRestaurantId(restaurantId));

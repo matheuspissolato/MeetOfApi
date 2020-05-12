@@ -14,6 +14,14 @@ public class ReviewMapper {
 
 	private ModelMapper mapper = new ModelMapper();
 
+	public Review toReview(ReviewDto reviewDto) {
+		return mapper.map(reviewDto, Review.class);
+	}
+
+	public ReviewDto toReviewDto(Review review) {
+		return mapper.map(review, ReviewDto.class);
+	}
+
 	public List<ReviewDto> toListReviewDto(List<Review> review) {
 		return mapper.map(review, new TypeToken<List<Review>>() {
 		}.getType());

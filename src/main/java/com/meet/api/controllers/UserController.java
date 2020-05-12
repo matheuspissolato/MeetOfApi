@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v1")
 @CrossOrigin(origins = "*")
 public class UserController {
 
@@ -44,7 +44,7 @@ public class UserController {
 	 * @return
 	 * @throws NoSuchAlgorithmException
 	 */
-	@PostMapping
+	@PostMapping("/user")
 	public ResponseEntity<Response<UserDto>> create(@Valid @RequestBody UserDto userDto, BindingResult result) {
 		log.info("Starting persist User...");
 		Response<UserDto> response = new Response<>();

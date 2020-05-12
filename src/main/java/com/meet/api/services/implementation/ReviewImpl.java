@@ -21,4 +21,10 @@ public class ReviewImpl implements ReviewService {
 	public List<Review> findReviewsByRestaurantId(Long restaurantId) {
 		return this.reviewRepository.findReviewsByRestaurantId(restaurantId);
 	}
+
+	@Override
+	@Cacheable("restaurantReview")
+	public Review persist(Review review) {
+		return this.reviewRepository.save(review);
+	}
 }

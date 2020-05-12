@@ -18,4 +18,5 @@ public class MenuMapper {
 		return mapper.map(menu, new TypeToken<List<Menu>>() {
 		}.getType());
 	}
+
 }
