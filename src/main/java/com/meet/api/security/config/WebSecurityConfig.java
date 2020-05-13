@@ -1,8 +1,11 @@
 package com.meet.api.security.config;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,17 +18,16 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.meet.api.security.JwtAuthenticationEntryPoint;
 import com.meet.api.security.filter.JwtAuthenticationTokenFilter;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-	@Autowired
-	private JwtAuthenticationEntryPoint unauthorizedHandler;
 
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -51,14 +53,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new JwtAuthenticationTokenFilter();
 	}
 
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		CorsConfiguration config = new CorsConfiguration();
+		source.registerCorsConfiguration("/**", config.applyPermitDefaultValues());
+		config.setExposedHeaders(Arrays.asList("Authorization"));
+
+		return source;
+	}
+
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-				.antMatchers("/api/v1/auth/**", "/api/v1/restaurant/**", "/configuration/security", "/webjars/**")
-				.permitAll().anyRequest().authenticated();
-		httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
-		httpSecurity.headers().cacheControl();
+					 	httpSecurity.cors().and()
+						.csrf()
+						.disable()
+						.authorizeRequests()
+			            .antMatchers(HttpMethod.POST, "/**/auth/**").permitAll()
+			            .antMatchers(HttpMethod.POST, "/**/user/**").permitAll()
+						.antMatchers("/**/restaurant/**","/configuration/security", "/webjars/**")
+						.permitAll()
+						.anyRequest()
+						.authenticated();
+				httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+				httpSecurity.headers().cacheControl();
+				httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 
 }

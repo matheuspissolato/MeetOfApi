@@ -50,7 +50,7 @@ public class RestaurantController {
 			return new ResponseEntity<>(restaurantDto, HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/restaurants/{id}")
+	@GetMapping(value = "/restaurant/{id}")
 	public ResponseEntity<RestaurantDto> findById(@PathVariable("id") Long id) {
 		log.info("Starting get restaurant by id {}", id);
 		Optional<Restaurant> restaurant = this.restaurantService.findById(id);

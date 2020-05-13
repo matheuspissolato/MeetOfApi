@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
+import com.meet.api.enums.ProfileUser;
 import com.meet.api.model.User;
 import com.meet.api.repository.UserRepository;
 import com.meet.api.services.UserService;
+import com.meet.api.utils.PasswordUtils;
 
 @Service
 public class UserImpl implements UserService {
@@ -24,6 +26,8 @@ public class UserImpl implements UserService {
 
 	@Override
 	public User persist(User user) {
+		user.setProfile(ProfileUser.ROLE_CLIENT);
+		user.setPassword(PasswordUtils.generateBCrypt(user.getPassword()));
 		return this.userRepository.save(user);
 	}
 
