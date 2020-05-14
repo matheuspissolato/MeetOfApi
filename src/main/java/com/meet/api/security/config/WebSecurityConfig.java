@@ -65,19 +65,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
-					 	httpSecurity.cors().and()
-						.csrf()
-						.disable()
-						.authorizeRequests()
-			            .antMatchers(HttpMethod.POST, "/**/auth/**").permitAll()
-			            .antMatchers(HttpMethod.POST, "/**/user/**").permitAll()
-						.antMatchers("/**/restaurant/**","/configuration/security", "/webjars/**")
-						.permitAll()
-						.anyRequest()
-						.authenticated();
-				httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
-				httpSecurity.headers().cacheControl();
-				httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		httpSecurity.cors().and()
+			.csrf()
+			.disable()
+			.authorizeRequests()
+	        .antMatchers(HttpMethod.POST, "/**/auth/**").permitAll()
+	        .antMatchers(HttpMethod.POST, "/**/user/**").permitAll()
+			.antMatchers("/**/restaurant/**","/configuration/security", "/webjars/**")
+			.permitAll()
+			.anyRequest()
+			.authenticated();
+		httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+		httpSecurity.headers().cacheControl();
+		httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 
 }
