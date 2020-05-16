@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1")
-@CrossOrigin("*")
 public class ReviewController {
 
 	@Autowired
@@ -36,7 +34,7 @@ public class ReviewController {
 	@Autowired
 	private ReviewMapper mapper;
 
-	@GetMapping(value = "/restaurant/{restaurantId}/review")
+	@GetMapping(value = "/restaurants/{restaurantId}/reviews")
 	public ResponseEntity<List<ReviewDto>> findReviewsByRestaurantId(@PathVariable("restaurantId") Long restaurantId) {
 		log.info("Starting get reviews by restaurantId {} ", restaurantId);
 		List<ReviewDto> review = this.mapper.toListReviewDto(this.reviewService.findReviewsByRestaurantId(restaurantId));
@@ -47,7 +45,7 @@ public class ReviewController {
 			return new ResponseEntity<>(review, HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/review")
+	@PostMapping(value = "/reviews")
 	public ResponseEntity<Response<ReviewDto>> create(@Valid @RequestBody ReviewDto reviewDto, BindingResult result) {
 		log.info("Starting create review...");
 		Response<ReviewDto> response = new Response<>();
@@ -60,7 +58,7 @@ public class ReviewController {
 
 		Review review = this.reviewService.persist(this.mapper.toReview(reviewDto));
 		response.setData(this.mapper.toReviewDto(review));
-		return ResponseEntity.ok(response);
+		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 
 }

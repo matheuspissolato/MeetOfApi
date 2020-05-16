@@ -48,8 +48,6 @@ public class AuthenticationController {
 	 */
 	@PostMapping
 	public ResponseEntity<Response<JwtResponse>> authenticate(@Valid @RequestBody JwtRequest jwtRequest, BindingResult result) {
-		log.info("Creating token for email {}.", jwtRequest.getEmail());
-		
 		Response<JwtResponse> response = new Response<>();
 
 		if (result.hasErrors()) {

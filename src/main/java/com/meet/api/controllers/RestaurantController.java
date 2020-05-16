@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +29,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1")
-@CrossOrigin("*")
 public class RestaurantController {
 
 	@Autowired
@@ -39,7 +37,7 @@ public class RestaurantController {
 	@Autowired
 	private RestaurantMapper mapper;
 
-	@GetMapping("/restaurant")
+	@GetMapping("/restaurants")
 	public ResponseEntity<List<RestaurantDto>> findAll() {
 		log.info("Starting get all restaurants");
 		List<RestaurantDto> restaurantDto = this.mapper.toListRestaurantDto(restaurantService.findAll());
@@ -50,7 +48,7 @@ public class RestaurantController {
 			return new ResponseEntity<>(restaurantDto, HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/restaurant/{id}")
+	@GetMapping(value = "/restaurants/{id}")
 	public ResponseEntity<RestaurantDto> findById(@PathVariable("id") Long id) {
 		log.info("Starting get restaurant by id {}", id);
 		Optional<Restaurant> restaurant = this.restaurantService.findById(id);
@@ -61,7 +59,7 @@ public class RestaurantController {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
-	@PostMapping("/restaurant")
+	@PostMapping("/restaurants")
 	public ResponseEntity<Response<RestaurantDto>> create(@Valid @RequestBody RestaurantDto restaurantDto,
 			BindingResult result) {
 		log.info("Starting create Restaurant...");
@@ -75,10 +73,10 @@ public class RestaurantController {
 
 		Restaurant restaurant = this.restaurantService.persist(this.mapper.toRestaurant(restaurantDto));
 		response.setData(this.mapper.toRestaurantDto(restaurant));
-		return ResponseEntity.ok(response);
+		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 
-	@PutMapping("/restaurant")
+	@PutMapping("/restaurants")
 	public ResponseEntity<Response<RestaurantDto>> update(@Valid @RequestBody RestaurantDto restaurantDto,
 			BindingResult result) {
 		log.info("Starting update Restaurant...");
@@ -92,10 +90,10 @@ public class RestaurantController {
 
 		Restaurant restaurant = this.restaurantService.persist(this.mapper.toRestaurant(restaurantDto));
 		response.setData(this.mapper.toRestaurantDto(restaurant));
-		return ResponseEntity.ok(response);
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
-	@DeleteMapping("/restaurant/{id}")
+	@DeleteMapping("/restaurants/{id}")
 	public ResponseEntity<Response<String>> delete(@PathVariable("id") Long id) {
 		log.info("Starting delete Restaurant by id {}", id);
 		Response<String> response = new Response<>();
@@ -107,7 +105,8 @@ public class RestaurantController {
 			return ResponseEntity.badRequest().body(response);
 		}
 		this.restaurantService.deleteById(id);
-		return ResponseEntity.ok(new Response<String>());
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new Response<String>());
+
 	}
 
 }

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1")
-@CrossOrigin(value = "*")
 public class OrderController {
 
 	@Autowired
@@ -37,7 +35,7 @@ public class OrderController {
 	@Autowired
 	private OrderMapper mapper;
 
-	@GetMapping("/order/{id}")
+	@GetMapping("/orders/{id}")
 	public ResponseEntity<OrderDto> findById(@PathVariable("id") Long id, RedirectAttributes attributes) {
 		log.info("Starting get Order by id {}", id);
 
@@ -49,7 +47,7 @@ public class OrderController {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
-	@PostMapping("/order")
+	@PostMapping("/orders")
 	public ResponseEntity<Response<OrderDto>> create(@Valid @RequestBody OrderDto orderDto, BindingResult result) {
 		log.info("Starting persist Order...");
 		Response<OrderDto> response = new Response<>();
@@ -62,6 +60,6 @@ public class OrderController {
 
 		Order order = this.orderService.persist(this.mapper.toOrder(orderDto));
 		response.setData(this.mapper.toOrderDto(order));
-		return ResponseEntity.ok(response);
+		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 }

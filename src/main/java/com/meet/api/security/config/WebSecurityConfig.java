@@ -70,8 +70,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.disable()
 			.authorizeRequests()
 	        .antMatchers(HttpMethod.POST, "/**/auth/**").permitAll()
-	        .antMatchers(HttpMethod.POST, "/**/user/**").permitAll()
-			.antMatchers("/**/restaurant/**","/configuration/security", "/webjars/**")
+	        .antMatchers(HttpMethod.POST, "/**/users/**").permitAll()
+			.antMatchers("/**/restaurants/**","/configuration/security", "/webjars/**")
 			.permitAll()
 			.anyRequest()
 			.authenticated();

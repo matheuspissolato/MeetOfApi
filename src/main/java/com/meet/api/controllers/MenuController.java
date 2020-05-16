@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1")
-@CrossOrigin("*")
 public class MenuController {
 
 	@Autowired
@@ -29,7 +27,7 @@ public class MenuController {
 	@Autowired
 	private MenuMapper mapper;
 
-	@GetMapping(value = "/restaurant/{restaurantId}/menu")
+	@GetMapping(value = "/restaurants/{restaurantId}/menus")
 	public ResponseEntity<List<MenuDto>> findMenuByRestaurant(@PathVariable("restaurantId") Long restaurantId) {
 		log.info("Starting get menu items by restaurantId");
 		List<MenuDto> menu = this.mapper.toListMenuDto(this.menuService.findMenuByRestaurantId(restaurantId));
