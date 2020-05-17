@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,6 +61,7 @@ public class RestaurantController {
 	}
 
 	@PostMapping("/restaurants")
+	@PreAuthorize("hasAnyRole('ROLE_MANAGER')")
 	public ResponseEntity<Response<RestaurantDto>> create(@Valid @RequestBody RestaurantDto restaurantDto,
 			BindingResult result) {
 		log.info("Starting create Restaurant...");
@@ -77,6 +79,7 @@ public class RestaurantController {
 	}
 
 	@PutMapping("/restaurants")
+	@PreAuthorize("hasAnyRole('ROLE_MANAGER')")
 	public ResponseEntity<Response<RestaurantDto>> update(@Valid @RequestBody RestaurantDto restaurantDto,
 			BindingResult result) {
 		log.info("Starting update Restaurant...");
@@ -94,6 +97,7 @@ public class RestaurantController {
 	}
 
 	@DeleteMapping("/restaurants/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_MANAGER')")
 	public ResponseEntity<Response<String>> delete(@PathVariable("id") Long id) {
 		log.info("Starting delete Restaurant by id {}", id);
 		Response<String> response = new Response<>();

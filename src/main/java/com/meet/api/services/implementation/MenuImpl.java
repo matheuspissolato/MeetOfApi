@@ -17,8 +17,14 @@ public class MenuImpl implements MenuService {
 	private MenuRepository menuRepository;
 
 	@Override
-	@Cacheable("restaurantMenu")
+	@Cacheable("restaurantsMenu")
 	public List<Menu> findMenuByRestaurantId(Long restaurantId) {
 		return this.menuRepository.findMenuByRestaurantId(restaurantId);
+	}
+
+	@Override
+	@Cacheable("restaurantsMenu")
+	public Menu persist(Menu menu) {
+		return this.menuRepository.save(menu);
 	}
 }

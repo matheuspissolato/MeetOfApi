@@ -19,4 +19,12 @@ public class MenuMapper {
 		}.getType());
 	}
 
+	public Menu toMenu(MenuDto menuDto) {
+		return mapper.map(menuDto, Menu.class);
+	}
+
+	public MenuDto toMenuDto(Menu menu) {
+		return mapper.map(menu, MenuDto.class);
+	}
+
 }

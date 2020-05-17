@@ -5,7 +5,9 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
 
 @Data
 public class UserDto {
@@ -21,6 +23,7 @@ public class UserDto {
 	@Email(message = "Email Invalid.")
 	private String email;
 
+	@Setter(AccessLevel.NONE)
 	@NotEmpty(message = "Password cannot be empty")
 	@Length(max = 50, message = "Password must contain between 4 and 50 characters.")
 	private String password;

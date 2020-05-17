@@ -3,10 +3,10 @@
 	<cache name="restaurants" maxEntriesLocalHeap="200"
 		timeToLiveSeconds="3600">
 	</cache>
-	<cache name="restaurantMenu" maxEntriesLocalHeap="200"
+	<cache name="restaurantsMenu" maxEntriesLocalHeap="200"
 		timeToLiveSeconds="3600">
 	</cache>
-	<cache name="restaurantReview" maxEntriesLocalHeap="200"
+	<cache name="restaurantsReview" maxEntriesLocalHeap="200"
 		timeToLiveSeconds="3600">
 	</cache>
 </ehcache>

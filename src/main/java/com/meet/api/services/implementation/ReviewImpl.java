@@ -17,13 +17,13 @@ public class ReviewImpl implements ReviewService {
 	private ReviewRepository reviewRepository;
 
 	@Override
-	@Cacheable("restaurantReview")
+	@Cacheable("restaurantsReview")
 	public List<Review> findReviewsByRestaurantId(Long restaurantId) {
 		return this.reviewRepository.findReviewsByRestaurantId(restaurantId);
 	}
 
 	@Override
-	@Cacheable("restaurantReview")
+	@Cacheable("restaurantsReview")
 	public Review persist(Review review) {
 		return this.reviewRepository.save(review);
 	}

@@ -13,5 +13,14 @@ public interface MenuService {
 	 * @return
 	 */
 	List<Menu> findMenuByRestaurantId(Long restaurantId);
+	
+	
+	/**
+	 * Persist Menu
+	 * 
+	 * @param menu
+	 * @return
+	 */
+	Menu persist(Menu menu);
 
 }
