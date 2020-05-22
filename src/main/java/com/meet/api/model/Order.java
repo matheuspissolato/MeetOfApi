@@ -52,8 +52,8 @@ public class Order implements Serializable {
 	@Column(name = "phone", nullable = false)
 	private String phone;
 
-	@Column(name = "street", nullable = false)
-	private String street;
+	@Column(name = "adress", nullable = false)
+	private String adress;
 
 	@Column(name = "number", nullable = false)
 	private Long number;

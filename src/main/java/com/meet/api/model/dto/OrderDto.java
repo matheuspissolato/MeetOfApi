@@ -36,9 +36,9 @@ public class OrderDto {
 	@Length(min = 11, max = 11, message = "Phone number must contain 11 numbers.")
 	private String phone;
 
-	@NotEmpty(message = "Street cannot be empty")
-	@Length(min = 5, max = 100, message = "Street must contain between 5 and 100 characters.")
-	private String street;
+	@NotEmpty(message = "Adress cannot be empty")
+	@Length(min = 5, max = 100, message = "Adress must contain between 5 and 100 characters.")
+	private String adress;
 
 	@NotNull(message = "Number cannot be empty")
 	private Long number;

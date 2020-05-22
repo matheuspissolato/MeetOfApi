@@ -36,9 +36,9 @@ public class RestaurantDto {
 	@Length(min = 10, max = 50, message = "Hours must contain between 10 and 50 characters.")
 	private String hours;
 
-	@NotEmpty(message = "Street cannot be empty")
-	@Length(min = 5, max = 100, message = "Street must contain between 5 and 100 characters.")
-	private String street;
+	@NotEmpty(message = "Adress cannot be empty")
+	@Length(min = 5, max = 100, message = "Adress must contain between 5 and 100 characters.")
+	private String adress;
 
 	@NotEmpty(message = "District cannot be empty")
 	@Length(max = 30, message = "District must contain between 10 and 30 characters.")

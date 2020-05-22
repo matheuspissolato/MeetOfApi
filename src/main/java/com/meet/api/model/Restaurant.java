@@ -41,8 +41,8 @@ public class Restaurant implements Serializable {
 	@Column(name = "hours", nullable = false)
 	private String hours;
 
-	@Column(name = "street", nullable = false)
-	private String street;
+	@Column(name = "adress", nullable = false)
+	private String adress;
 
 	@Column(name = "district", nullable = false)
 	private String district;

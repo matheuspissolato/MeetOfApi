@@ -9,7 +9,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.meet.api.response.Response;
 import com.meet.api.security.model.JwtRequest;
 import com.meet.api.security.model.JwtResponse;
+import com.meet.api.security.model.JwtUser;
 import com.meet.api.security.service.JwtUserDetailsService;
 import com.meet.api.security.util.JwtTokenUtil;
 
@@ -59,10 +59,10 @@ public class AuthenticationController {
 		Authentication auth = manager.authenticate(new UsernamePasswordAuthenticationToken(jwtRequest.getEmail(), jwtRequest.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(auth);
 
-		UserDetails userDetails = userDetailsService.loadUserByUsername(jwtRequest.getEmail());
+		JwtUser user = userDetailsService.loadUserByUsername(jwtRequest.getEmail());
 
-		String token = jwtTokenUtil.generateToken(userDetails);
-		response.setData(new JwtResponse(userDetails.getUsername(), token));
+		String token = jwtTokenUtil.generateToken(user);
+		response.setData(new JwtResponse(user.getId(), user.getName(), user.getUsername(), token));
 
 		return ResponseEntity.ok(response);
 	}
